@@ -43,7 +43,7 @@ public class Connection {
 	}
 
 	@SuppressWarnings("unused")
-	private boolean closeConnection() {
+	public boolean closeConnection() {
 		try {
 			conn.close();
 			return true;

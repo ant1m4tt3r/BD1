@@ -1,8 +1,6 @@
 package views;
 
-import javax.swing.JPanel;
-
-public class EquipmentPane extends JPanel {
+public class EquipmentPane extends CustomPane {
 
 	/**
 	 * 
@@ -11,6 +9,24 @@ public class EquipmentPane extends JPanel {
 	
 	public EquipmentPane() {
 		super();
+	}
+
+	@Override
+	void createComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void createModels() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void search(String text) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

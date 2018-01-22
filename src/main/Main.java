@@ -1,11 +1,18 @@
 package main;
 
+import javax.swing.SwingUtilities;
+
 import controllers.MainController;
 
 public class Main {
 
 	public static void main(String[] args) {
-		new MainController();
+		SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MainController();
+            }
+        });
 	}
 
 }

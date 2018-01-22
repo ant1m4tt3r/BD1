@@ -2,11 +2,13 @@ package controllers;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import db.Connection;
 import views.EquipmentPane;
 import views.FoodPane;
 import views.PlantPane;
@@ -31,7 +33,7 @@ public class MainController extends JFrame {
 		 ******** INITIAL FRAME CONFIGS *******
 		 *************************************/
 		setSize(600, 400);
-		
+
 		/*********************************
 		 ******* CREATE COMPONENTS *******
 		 ********************************/
@@ -42,11 +44,19 @@ public class MainController extends JFrame {
 		 ********************************/
 		addPanes();
 		add(mainPane);
-		
+
 		/**************************************
 		 ********* FINAL FRAME CONFIGS ********
 		 *************************************/
+//		addWindowListener(new WindowAdapter() {
+//			public void windowClosing(WindowEvent winEvt) {
+//				// Connection.getInstance().closeConnection();
+//				System.exit(0);
+//			}
+//		});
 		centreWindow(this);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
 		setVisible(true);
 	}
 

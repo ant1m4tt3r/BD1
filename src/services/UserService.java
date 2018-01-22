@@ -1,29 +1,30 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserService extends Service<Object> {
+public class UserService extends Service {
 
 	@Override
-	public List<Object> selectAll() {
+	public List<ArrayList<Object>> selectAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object select() {
+	public Object select(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object delete() {
+	public Object delete(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object update(String id) {
+	public Object update(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

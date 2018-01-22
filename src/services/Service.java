@@ -1,23 +1,24 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import db.Connection;
 
-public abstract class Service<T> {
+public abstract class Service {
 
-	private Connection connection = null;
+//	private Connection connection = null;
+//	
+//	public Service() {
+//		this.connection = Connection.getInstance();
+//	}
 	
-	public Service() {
-		this.connection = Connection.getInstance();
-	}
+	public abstract List<ArrayList<Object>> selectAll();
 	
-	public abstract List<T> selectAll();
+	public abstract Object select(int id);
 	
-	public abstract T select();
+	public abstract Object delete(int id);
 	
-	public abstract T delete();
-	
-	public abstract T update(String id);
+	public abstract Object update(int id);
 	
 }
