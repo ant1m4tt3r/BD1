@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,24 +8,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
-import models.Model;
 import models.PlantModel;
 import models.beans.Plant;
+import models.table.ButtonColumn;
 import models.table.PlantTableModel;
-import services.PlantService;
 
-public class PlantPane extends CustomPane {
+public class PlantPane extends CustomPane<Plant> {
 
 	/**
 	 * 
@@ -50,14 +48,6 @@ public class PlantPane extends CustomPane {
 		this.label = new JLabel("Pesquisa por nome:");
 		this.searchField = new JTextField();
 		this.searchBtn = new JButton("Pesquisar");
-		this.table = new JTable(tableModel);
-		this.tableModel.addTableModelListener(new TableModelListener() {
-
-			public void tableChanged(TableModelEvent e) {
-				System.out.println(e);
-			}
-			
-		});
 
 		GridBagConstraints cons = new GridBagConstraints();
 
@@ -76,7 +66,6 @@ public class PlantPane extends CustomPane {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				System.out.println("ACTION");
 				String s = searchField.getText();
 				if (s == null)
 					s = "";
@@ -124,12 +113,40 @@ public class PlantPane extends CustomPane {
 
 	void createModels() {
 		this.model = new PlantModel();
-		this.tableModel = new PlantTableModel(this.model.selectAll(), model);
+		List<Plant> plants = this.model.selectAll();
+		this.tableModel = new PlantTableModel(plants, model);
+		this.table = new JTable();
+		this.table.setModel(this.tableModel);
+		this.tableModel.fireTableDataChanged();
+		this.tableModel.addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e);
+			}
+		});
+		;
+
+		Action delete = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				JTable table = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				((DefaultTableModel) table.getModel()).removeRow(modelRow);
+			}
+		};
+
+		ButtonColumn buttonColumn = new ButtonColumn(table, delete, 3);
+		buttonColumn.setMnemonic(KeyEvent.VK_D);
 	}
 
 	void search(String text) {
-		this.tableModel = new PlantTableModel(this.model.selectByName(text), this.model);
+		System.out.println("->" + text);
+		List<Plant> plants = this.model.selectByName(text);
+		this.tableModel.setRowCount(0);
+		this.tableModel.updateValues(plants);
 		this.table.setModel(this.tableModel);
+		this.tableModel.fireTableDataChanged();
 	}
 
 }

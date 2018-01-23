@@ -3,12 +3,11 @@ package models;
 import java.util.List;
 
 import models.beans.Equipment;
-import models.beans.Plant;
 import services.EquipmentService;
 
 public class EquipmentModel extends Model<Equipment> {
 
-	private EquipmentService service;
+	EquipmentService service;
 
 	public EquipmentModel() {
 		service = new EquipmentService();
@@ -33,9 +32,15 @@ public class EquipmentModel extends Model<Equipment> {
 	}
 
 	@Override
-	public Equipment update(int id) {
-		service.update(id);
+	public Equipment update(Equipment row) {
+		service.update(row.getId(), null);
 		return null;
+	}
+
+	@Override
+	public void insert(Equipment row) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

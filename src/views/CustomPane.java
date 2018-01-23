@@ -3,17 +3,17 @@ package views;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
-import javax.swing.table.AbstractTableModel;
 
 import models.Model;
-import models.beans.Plant;
+import models.beans.Bean;
+import models.table.CustomTableModel;
 
-public abstract class CustomPane extends JPanel {
+public abstract class CustomPane<T extends Bean> extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected AbstractTableModel tableModel = null;
-	protected Model<Plant> model;
+	protected CustomTableModel<T> tableModel = null;
+	protected Model<T> model;
 
 	public CustomPane() {
 		super(new GridBagLayout());

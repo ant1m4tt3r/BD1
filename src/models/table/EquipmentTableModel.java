@@ -23,22 +23,27 @@ public class EquipmentTableModel extends CustomTableModel<Equipment> {
 	public EquipmentTableModel(List<Equipment> list, Model<Equipment> model) {
 		super(list, model);
 	}
-
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		System.out.println("SET");
-		Equipment row = this.list.get(rowIndex);
+	
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+	
+	@Override
+	public String getColumnName(int column) {
+		return columnNames[column];
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		Equipment row = this.list.get(rowIndex);
-		return null;
+	public Class<?> getColumnClass(int columnIndex) {
+		return columnClass[columnIndex];
 	}
 
-	@Override
-	public void tableChanged(Equipment row) {
-		// TODO Auto-generated method stub
-		
+	public void updateValues(List<Equipment> equipments) {
+		for (Equipment equipment : equipments) {
+			Object data[] = new Object[3];
+			this.addRow(data);
+		}
 	}
 
 }

@@ -3,12 +3,11 @@ package models;
 import java.util.List;
 
 import models.beans.Food;
-import models.beans.Plant;
 import services.FoodService;
 
 public class FoodModel extends Model<Food> {
-
-	private FoodService service;
+	
+	FoodService service;
 
 	public FoodModel() {
 		service = new FoodService();
@@ -33,9 +32,15 @@ public class FoodModel extends Model<Food> {
 	}
 
 	@Override
-	public Food update(int id) {
-		service.update(id);
+	public Food update(Food row) {
+		service.update(row.getId(), null);
 		return null;
+	}
+	
+	@Override
+	public void insert(Food row) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

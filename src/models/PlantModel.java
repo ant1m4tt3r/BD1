@@ -1,25 +1,22 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import models.beans.Plant;
 import services.PlantService;
 
 public class PlantModel extends Model<Plant> {
 
-	private PlantService service;
+	PlantService service;
 
 	public PlantModel() {
 		service = new PlantService();
 	}
 
 	@Override
-	public List<Plant> selectAll() {
-		List<ArrayList<Object>> list = service.selectAll();
-		List<Plant> plants = new ArrayList<Plant>();
+	public ArrayList<Plant> selectAll() {
+		ArrayList<ArrayList<Object>> list = service.selectAll();
+		ArrayList<Plant> plants = new ArrayList<Plant>();
 		for (ArrayList<Object> arrayList : list) {
 			Plant plant = new Plant();
 			plant.setId((int) arrayList.get(0));
@@ -43,20 +40,40 @@ public class PlantModel extends Model<Plant> {
 	}
 
 	@Override
-	public Plant update(int id) {
-		service.update(id);
-		return null;
+	public Plant update(Plant row) {
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add((int) row.getId());
+		list.add((String) row.getName());
+		list.add((String) row.getDepto());
+		return select((int) service.update(row.getId(), list));
 	}
 
-	public List<Plant> selectByName(String name) {
-		if (name.isEmpty())
-			return this.selectAll();
+	@Override
+	public void insert(Plant row) {
+		// TODO Auto-generated method stub
 
-		List<Plant> list = this.selectAll().stream()
-				.filter(plant -> plant.getName().toLowerCase().contains(name))
-				.collect(Collectors.toList());
+	}
 
-		return list;
+	public ArrayList<Plant> selectByName(String name) {
+		if (name == null || name.isEmpty())
+			return selectAll();
+		
+		ArrayList<ArrayList<Object>> list = service.selectByName(name.toLowerCase());
+		if (list == null || list.isEmpty())
+			return new ArrayList<Plant>();
+		
+		ArrayList<Plant> plantList = new ArrayList<Plant>();
+		Plant p;
+		
+		for (ArrayList<Object> row : list) {
+			p = new Plant();
+			p.setId((int) row.get(0));
+			p.setName((String) row.get(1));
+			p.setDepto((String) row.get(2));
+			plantList.add(p);
+		}
+		
+		return plantList;
 	}
 
 }

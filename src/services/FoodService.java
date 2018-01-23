@@ -12,7 +12,7 @@ public class FoodService extends Service {
 	}
 
 	@Override
-	public Object select(int id) {
+	public ArrayList<Object> select(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -24,9 +24,15 @@ public class FoodService extends Service {
 	}
 
 	@Override
-	public Object update(int id) {
+	public int update(int id, ArrayList<Object> row) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
+	}
+
+	@Override
+	public void insert(ArrayList<Object> row) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

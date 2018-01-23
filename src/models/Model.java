@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import models.beans.Bean;
+import models.beans.User;
 import services.Service;
 
 public abstract class Model<T extends Bean> {
@@ -14,19 +15,10 @@ public abstract class Model<T extends Bean> {
 
 	public abstract T delete(int id);
 
-	public abstract T update(int i);
+	public abstract T update(T row);
 
-//	public abstract List<Plant> selectByName(String text);
-	
-	public List<T> selectByName(String name) {
-		if (name.isEmpty())
-			return selectAll();
+	public abstract void insert(T row);
 
-		List<T> list = this.selectAll().stream()
-				.filter(t -> t.getName().toLowerCase().contains(name))
-				.collect(Collectors.toList());
-
-		return list;
-	}
+	public abstract List<T> selectByName(String text);
 
 }

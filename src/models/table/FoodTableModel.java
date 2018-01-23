@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Model;
 import models.beans.Food;
+import models.beans.User;
 
 public class FoodTableModel extends CustomTableModel<Food> {
 	
@@ -21,21 +22,26 @@ public class FoodTableModel extends CustomTableModel<Food> {
 		super(list, model);
 	}
 	
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		System.out.println("SET");
-		Food row = this.list.get(rowIndex);
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+	
+	@Override
+	public String getColumnName(int column) {
+		return columnNames[column];
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		Food row = this.list.get(rowIndex);
-		return null;
+	public Class<?> getColumnClass(int columnIndex) {
+		return columnClass[columnIndex];
 	}
-
-	@Override
-	public void tableChanged(Food row) {
-		// TODO Auto-generated method stub
-		
+	
+	public void updateValues(List<Food> foods) {
+		for (Food food : foods) {
+			Object data[] = new Object[3];
+			this.addRow(data);
+		}
 	}
 
 }

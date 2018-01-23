@@ -3,6 +3,7 @@ package models.table;
 import java.util.List;
 
 import models.Model;
+import models.beans.Plant;
 import models.beans.User;
 
 public class UserTableModel extends CustomTableModel<User> {
@@ -20,22 +21,27 @@ public class UserTableModel extends CustomTableModel<User> {
 	public UserTableModel(List<User> list, Model<User> model) {
 		super(list, model);
 	}
-
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		System.out.println("SET");
-		User row = this.list.get(rowIndex);
+	
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+	
+	@Override
+	public String getColumnName(int column) {
+		return columnNames[column];
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		User row = this.list.get(rowIndex);
-		return null;
+	public Class<?> getColumnClass(int columnIndex) {
+		return columnClass[columnIndex];
 	}
 
-	@Override
-	public void tableChanged(User row) {
-		// TODO Auto-generated method stub
-
+	public void updateValues(List<User> users) {
+		for (User user : users) {
+			Object data[] = new Object[3];
+			this.addRow(data);
+		}
 	}
 
 }

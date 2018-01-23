@@ -4,53 +4,50 @@ import java.util.List;
 
 import models.Model;
 import models.beans.Plant;
-import services.PlantService;
 
 public class PlantTableModel extends CustomTableModel<Plant> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unused")
 	private final String[] columnNames = new String[] { "Id", "Nome",
-			"Departamento" };
+			"Departamento", "Action" };
 
 	@SuppressWarnings({ "unused", "rawtypes" })
 	private final Class[] columnClass = new Class[] { Integer.class, String.class,
-			String.class };
+			String.class , ButtonColumn.class};
 
-	public PlantTableModel(List<Plant> list, Model<Plant> model) {
-		super(list, model);
+	public PlantTableModel(List<Plant> plants, Model<Plant> model) {
+		super(plants, model);
+		updateValues(plants);
 	}
 	
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		Plant row = this.list.get(rowIndex);
-		if (0 == columnIndex) {
-			row.setId((int) value);
-		} else if (1 == columnIndex) {
-			row.setName(value.toString());
-			tableChanged(row);
-		} else if (2 == columnIndex) {
-			row.setDepto(value.toString());
-			tableChanged(row);
-		}
+
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+	
+	@Override
+	public String getColumnName(int column) {
+		return columnNames[column];
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		Plant row = this.list.get(rowIndex);
-		if (0 == columnIndex) {
-			return row.getId();
-		} else if (1 == columnIndex) {
-			return row.getName();
-		} else if (2 == columnIndex) {
-			return row.getDepto();
-		}
-		return null;
+	public Class<?> getColumnClass(int columnIndex) {
+		return columnClass[columnIndex];
 	}
-
-	@Override
-	public void tableChanged(Plant row) {
-		model.update(row.getId());
+	
+	
+	public void updateValues(List<Plant> plants) {
+		for (Plant plant : plants) {
+			Object data[] = new Object[4];
+			data[0] = plant.getId();
+			data[1] = plant.getName();
+			data[2] = plant.getDepto();
+			data[3] = "DELETE";
+			this.addRow(data);
+		}
 	}
 
 }
