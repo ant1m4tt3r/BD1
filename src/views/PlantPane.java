@@ -122,17 +122,28 @@ public class PlantPane extends CustomPane<Plant> {
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e);
+				int column = e.getColumn();
+				int row = e.getFirstRow();
+				int count = tableModel.getRowCount();
+				if (row < count) {
+					int id = (int) tableModel.getValueAt(row, 0);
+					String name = (String) tableModel.getValueAt(row, 1);
+					String depto = (String) tableModel.getValueAt(row, 2);
+					Plant p = new Plant(id, name, depto);
+					model.update(p);
+				}
 			}
 		});
 		;
 
 		Action delete = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println();
 				JTable table = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
+				model.delete((int) tableModel.getValueAt(modelRow, 0));
 				((DefaultTableModel) table.getModel()).removeRow(modelRow);
+				tableModel.fireTableDataChanged();
 			}
 		};
 
@@ -141,7 +152,6 @@ public class PlantPane extends CustomPane<Plant> {
 	}
 
 	void search(String text) {
-		System.out.println("->" + text);
 		List<Plant> plants = this.model.selectByName(text);
 		this.tableModel.setRowCount(0);
 		this.tableModel.updateValues(plants);
