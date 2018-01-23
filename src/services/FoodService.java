@@ -18,9 +18,9 @@ public class FoodService extends Service {
 	}
 
 	@Override
-	public Object delete(int id) {
+	public boolean delete(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -30,9 +30,9 @@ public class FoodService extends Service {
 	}
 
 	@Override
-	public void insert(ArrayList<Object> row) {
+	public boolean insert(ArrayList<Object> row) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 

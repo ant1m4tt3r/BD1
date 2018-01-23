@@ -26,9 +26,8 @@ public class UserModel extends Model<User> {
 	}
 
 	@Override
-	public User delete(int id) {
-		service.delete(id);
-		return null;
+	public boolean delete(int id) {
+		return service.delete(id);
 	}
 
 	@Override
@@ -38,7 +37,8 @@ public class UserModel extends Model<User> {
 	}
 
 	@Override
-	public void insert(User row) {
+	public boolean insert(User row) {
+		return false;
 		// TODO Auto-generated method stub
 
 	}

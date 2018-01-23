@@ -15,10 +15,10 @@ public abstract class Service {
 	
 	public abstract ArrayList<Object> select(int id);
 	
-	public abstract Object delete(int id);
+	public abstract boolean delete(int id);
 	
 	public abstract int update(int id, ArrayList<Object> row);
 	
-	public abstract void insert(ArrayList<Object> row);
+	public abstract boolean insert(ArrayList<Object> row);
 	
 }

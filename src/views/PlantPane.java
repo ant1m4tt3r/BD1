@@ -12,6 +12,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -31,7 +32,8 @@ public class PlantPane extends CustomPane<Plant> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String BUTTON_CLICK = "CLICK";
+	private static final String BUTTON_SEARCH = "CLICK";
+	private static final String BUTTON_INSERT = "INSERT";
 
 	private JLabel label;
 	private JTextField searchField;
@@ -96,12 +98,12 @@ public class PlantPane extends CustomPane<Plant> {
 
 		add(new JScrollPane(table), cons);
 
-		searchBtn.setActionCommand(BUTTON_CLICK);
+		searchBtn.setActionCommand(BUTTON_SEARCH);
 		searchBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals(BUTTON_CLICK)) {
+				if (e.getActionCommand().equals(BUTTON_SEARCH)) {
 					String s = searchField.getText();
 					if (s == null)
 						s = "";
@@ -110,6 +112,69 @@ public class PlantPane extends CustomPane<Plant> {
 			}
 
 		});
+
+		cons.gridx = 0;
+		cons.gridy = 3;
+		cons.gridwidth = 4;
+		cons.weightx = 4;
+		add(insertBtn, cons);
+
+		insertBtn.setActionCommand(BUTTON_INSERT);
+		insertBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals(BUTTON_INSERT)) {
+					showInsertNewPlantModal();
+				}
+			}
+
+		});
+
+	}
+
+	protected void showInsertNewPlantModal() {
+		JTextField id = new JTextField("5");
+		JTextField name = new JTextField("a");
+		JTextField depto = new JTextField("b");
+		Object[] message = { "Id:", id, "Nome:", name, "Departamento", depto };
+
+		int option = JOptionPane.showConfirmDialog(null, message, "Inserir Planta", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+			if (id.getText() == null || id.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Digite um id válido");
+				return;
+			}
+			if (name.getText() == null || name.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Digite um nome válido");
+				return;
+			}
+			if (depto.getText() == null || depto.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Digite um departamento válido");
+				return;
+			}
+
+			int id_ = 0;
+
+			try {
+				id_ = Integer.parseInt(id.getText());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Digite um id válido");
+				return;
+			}
+
+			Plant row = new Plant(id_, name.getText(), depto.getText());
+			boolean inserted = model.insert(row);
+			search("");
+			
+			if (inserted)
+				return;
+			
+			JOptionPane.showMessageDialog(null, "Houve um problema ao inserir.");
+
+		} else {
+			System.out.println("Login canceled");
+		}
 
 	}
 

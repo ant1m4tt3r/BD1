@@ -26,9 +26,8 @@ public class EquipmentModel extends Model<Equipment> {
 	}
 
 	@Override
-	public Equipment delete(int id) {
-		service.delete(id);
-		return null;
+	public boolean delete(int id) {
+		return service.delete(id);
 	}
 
 	@Override
@@ -38,7 +37,8 @@ public class EquipmentModel extends Model<Equipment> {
 	}
 
 	@Override
-	public void insert(Equipment row) {
+	public boolean insert(Equipment row) {
+		return false;
 		// TODO Auto-generated method stub
 
 	}

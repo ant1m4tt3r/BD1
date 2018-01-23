@@ -34,9 +34,8 @@ public class PlantModel extends Model<Plant> {
 	}
 
 	@Override
-	public Plant delete(int id) {
-		service.delete(id);
-		return null;
+	public boolean delete(int id) {
+		return service.delete(id);
 	}
 
 	@Override
@@ -49,12 +48,12 @@ public class PlantModel extends Model<Plant> {
 	}
 
 	@Override
-	public void insert(Plant row) {
+	public boolean insert(Plant row) {
 		ArrayList<Object> list = new ArrayList<Object>();
 		list.add((int) row.getId());
 		list.add((String) row.getName());
 		list.add((String) row.getDepto());
-		service.insert(list);
+		return service.insert(list);
 	}
 	
 	public ArrayList<Plant> selectByName(String name) {

@@ -26,9 +26,8 @@ public class FoodModel extends Model<Food> {
 	}
 
 	@Override
-	public Food delete(int id) {
-		service.delete(id);
-		return null;
+	public boolean delete(int id) {
+		return service.delete(id);
 	}
 
 	@Override
@@ -38,7 +37,8 @@ public class FoodModel extends Model<Food> {
 	}
 	
 	@Override
-	public void insert(Food row) {
+	public boolean insert(Food row) {
+		return false;
 		// TODO Auto-generated method stub
 		
 	}

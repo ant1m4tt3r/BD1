@@ -31,7 +31,7 @@ public class PlantService extends Service {
 	}
 
 	@Override
-	public Object delete(int id) {
+	public boolean delete(int id) {
 		for (int i = list.size() - 1; i >= 0; i--) {
 			ArrayList<Object> aux = list.get(i);
 			if ((int) aux.get(0) == id) {
@@ -58,8 +58,8 @@ public class PlantService extends Service {
 	}
 
 	@Override
-	public void insert(ArrayList<Object> row) {
-		list.add(row);
+	public boolean insert(ArrayList<Object> row) {
+		return list.add(row);
 	}
 
 	public ArrayList<ArrayList<Object>> selectByName(String name) {
