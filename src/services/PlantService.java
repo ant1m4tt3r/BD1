@@ -59,8 +59,7 @@ public class PlantService extends Service {
 
 	@Override
 	public void insert(ArrayList<Object> row) {
-		// TODO Auto-generated method stub
-
+		list.add(row);
 	}
 
 	public ArrayList<ArrayList<Object>> selectByName(String name) {

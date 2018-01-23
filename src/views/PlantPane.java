@@ -36,6 +36,7 @@ public class PlantPane extends CustomPane<Plant> {
 	private JLabel label;
 	private JTextField searchField;
 	private JButton searchBtn;
+	private JButton insertBtn;
 	private JTable table;
 
 	public PlantPane() {
@@ -48,6 +49,7 @@ public class PlantPane extends CustomPane<Plant> {
 		this.label = new JLabel("Pesquisa por nome:");
 		this.searchField = new JTextField();
 		this.searchBtn = new JButton("Pesquisar");
+		this.insertBtn = new JButton("Cadastrar Planta");
 
 		GridBagConstraints cons = new GridBagConstraints();
 

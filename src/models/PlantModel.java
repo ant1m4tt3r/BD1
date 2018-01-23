@@ -50,10 +50,13 @@ public class PlantModel extends Model<Plant> {
 
 	@Override
 	public void insert(Plant row) {
-		// TODO Auto-generated method stub
-
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add((int) row.getId());
+		list.add((String) row.getName());
+		list.add((String) row.getDepto());
+		service.insert(list);
 	}
-
+	
 	public ArrayList<Plant> selectByName(String name) {
 		if (name == null || name.isEmpty())
 			return selectAll();
