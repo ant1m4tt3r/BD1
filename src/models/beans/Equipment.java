@@ -10,6 +10,17 @@ public class Equipment extends Bean {
 	private String localization;
 	private Date lastMaintance;
 	private float current;
+	
+	public Equipment(int id, String name, String manufacturer) {
+		this.id = id;
+		this.name = name;
+		this.manufacturer = manufacturer;
+	}
+
+
+	public Equipment() {
+	}
+
 
 	public int getId() {
 		return id;

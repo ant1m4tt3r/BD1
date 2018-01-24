@@ -24,9 +24,9 @@ public class UserService extends Service {
 	}
 
 	@Override
-	public int update(int id, ArrayList<Object> row) {
+	public boolean update(int id, ArrayList<Object> row) {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 	@Override

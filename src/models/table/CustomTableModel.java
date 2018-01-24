@@ -16,9 +16,8 @@ public abstract class CustomTableModel<T extends Bean> extends DefaultTableModel
 	protected Model<T> model;
 	private static final long serialVersionUID = 1L;
 
-	public CustomTableModel(List<T> list, Model<T> model) {
+	public CustomTableModel(Model<T> model) {
 		this.model = model;
-		this.list = model.selectAll();
 	}
 
 	@Override

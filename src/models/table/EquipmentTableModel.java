@@ -2,26 +2,22 @@ package models.table;
 
 import java.util.List;
 
-import javax.swing.event.TableModelEvent;
-
 import models.Model;
 import models.beans.Equipment;
-import models.beans.Food;
 
 public class EquipmentTableModel extends CustomTableModel<Equipment> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@SuppressWarnings("unused")
 	private final String[] columnNames = new String[] { "Id", "Nome",
-			"Departamento" };
+			"Fabricante" , "Action"};
 
-	@SuppressWarnings({ "unused", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	private final Class[] columnClass = new Class[] { Integer.class, String.class,
-			String.class };
+			String.class, ButtonColumn.class };
 	
-	public EquipmentTableModel(List<Equipment> list, Model<Equipment> model) {
-		super(list, model);
+	public EquipmentTableModel(Model<Equipment> model) {
+		super(model);
 	}
 	
 	@Override
@@ -41,7 +37,11 @@ public class EquipmentTableModel extends CustomTableModel<Equipment> {
 
 	public void updateValues(List<Equipment> equipments) {
 		for (Equipment equipment : equipments) {
-			Object data[] = new Object[3];
+			Object data[] = new Object[4];
+			data[0] = equipment.getId();
+			data[1] = equipment.getName();
+			data[2] = equipment.getManufacturer();
+			data[3] = "DELETE";
 			this.addRow(data);
 		}
 	}

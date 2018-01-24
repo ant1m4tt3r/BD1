@@ -1,19 +1,12 @@
 package views;
 
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
@@ -32,119 +25,21 @@ public class PlantPane extends CustomPane<Plant> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String BUTTON_SEARCH = "CLICK";
-	private static final String BUTTON_INSERT = "INSERT";
-
-	private JLabel label;
-	private JTextField searchField;
-	private JButton searchBtn;
-	private JButton insertBtn;
-	private JTable table;
-
 	public PlantPane() {
-		super();
-		createModels();
-		createComponents();
-	}
-
-	void createComponents() {
-		this.label = new JLabel("Pesquisa por nome:");
-		this.searchField = new JTextField();
-		this.searchBtn = new JButton("Pesquisar");
-		this.insertBtn = new JButton("Cadastrar Planta");
-
-		GridBagConstraints cons = new GridBagConstraints();
-
-		cons.gridx = 0;
-		cons.gridwidth = 3;
-		cons.weightx = 3;
-		cons.anchor = GridBagConstraints.FIRST_LINE_START;
-		cons.fill = GridBagConstraints.BOTH;
-		cons.insets = new Insets(10, 10, 10, 10); // top padding
-		add(label, cons);
-
-		cons.gridy = 1;
-		add(searchField, cons);
-
-		searchField.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String s = searchField.getText();
-				if (s == null)
-					s = "";
-				search(s.trim().toLowerCase());
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-		});
-
-		cons.gridx = 3;
-		cons.weightx = 1;
-		cons.gridwidth = 1;
-
-		add(searchBtn, cons);
-
-		cons.gridx = 0;
-		cons.gridy = 2;
-		cons.gridwidth = 4;
-		cons.weightx = 4;
-
-		add(new JScrollPane(table), cons);
-
-		searchBtn.setActionCommand(BUTTON_SEARCH);
-		searchBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals(BUTTON_SEARCH)) {
-					String s = searchField.getText();
-					if (s == null)
-						s = "";
-					search(searchField.getText().trim().toLowerCase());
-				}
-			}
-
-		});
-
-		cons.gridx = 0;
-		cons.gridy = 3;
-		cons.gridwidth = 4;
-		cons.weightx = 4;
-		add(insertBtn, cons);
-
-		insertBtn.setActionCommand(BUTTON_INSERT);
-		insertBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals(BUTTON_INSERT)) {
-					showInsertNewPlantModal();
-				}
-			}
-
-		});
-
+		super("planta");
+		List<Plant> plants = this.model.selectAll();
+		initializing = true;
+		tableModel.updateValues(plants);
+		initializing = false;
 	}
 
 	protected void showInsertNewPlantModal() {
-		JTextField id = new JTextField("5");
-		JTextField name = new JTextField("a");
-		JTextField depto = new JTextField("b");
-		Object[] message = { "Id:", id, "Nome:", name, "Departamento", depto };
+		JTextField name = new JTextField();
+		JTextField depto = new JTextField();
+		Object[] message = { "Nome:", name, "Departamento", depto };
 
 		int option = JOptionPane.showConfirmDialog(null, message, "Inserir Planta", JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
-			if (id.getText() == null || id.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Digite um id válido");
-				return;
-			}
 			if (name.getText() == null || name.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Digite um nome válido");
 				return;
@@ -156,20 +51,13 @@ public class PlantPane extends CustomPane<Plant> {
 
 			int id_ = 0;
 
-			try {
-				id_ = Integer.parseInt(id.getText());
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Digite um id válido");
-				return;
-			}
-
 			Plant row = new Plant(id_, name.getText(), depto.getText());
 			boolean inserted = model.insert(row);
 			search("");
-			
+
 			if (inserted)
 				return;
-			
+
 			JOptionPane.showMessageDialog(null, "Houve um problema ao inserir.");
 
 		} else {
@@ -180,8 +68,7 @@ public class PlantPane extends CustomPane<Plant> {
 
 	void createModels() {
 		this.model = new PlantModel();
-		List<Plant> plants = this.model.selectAll();
-		this.tableModel = new PlantTableModel(plants, model);
+		this.tableModel = new PlantTableModel(model);
 		this.table = new JTable();
 		this.table.setModel(this.tableModel);
 		this.tableModel.fireTableDataChanged();
@@ -189,7 +76,8 @@ public class PlantPane extends CustomPane<Plant> {
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				int column = e.getColumn();
+				if (initializing)
+					return;
 				int row = e.getFirstRow();
 				int count = tableModel.getRowCount();
 				if (row < count) {
@@ -204,8 +92,9 @@ public class PlantPane extends CustomPane<Plant> {
 		;
 
 		Action delete = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
 			public void actionPerformed(ActionEvent e) {
-				System.out.println();
 				JTable table = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
 				model.delete((int) tableModel.getValueAt(modelRow, 0));
@@ -216,14 +105,6 @@ public class PlantPane extends CustomPane<Plant> {
 
 		ButtonColumn buttonColumn = new ButtonColumn(table, delete, 3);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
-	}
-
-	void search(String text) {
-		List<Plant> plants = this.model.selectByName(text);
-		this.tableModel.setRowCount(0);
-		this.tableModel.updateValues(plants);
-		this.table.setModel(this.tableModel);
-		this.tableModel.fireTableDataChanged();
 	}
 
 }

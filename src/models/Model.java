@@ -15,7 +15,7 @@ public abstract class Model<T extends Bean> {
 
 	public abstract boolean delete(int id);
 
-	public abstract T update(T row);
+	public abstract boolean update(T row);
 
 	public abstract boolean insert(T row);
 

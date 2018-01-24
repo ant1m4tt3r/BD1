@@ -31,9 +31,8 @@ public class UserModel extends Model<User> {
 	}
 
 	@Override
-	public User update(User row) {
-		service.update(row.getId(), null);
-		return null;
+	public boolean update(User row) {
+		return service.update(row.getId(), null);
 	}
 
 	@Override

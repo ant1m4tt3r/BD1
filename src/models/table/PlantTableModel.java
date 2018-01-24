@@ -17,9 +17,8 @@ public class PlantTableModel extends CustomTableModel<Plant> {
 	private final Class[] columnClass = new Class[] { Integer.class, String.class,
 			String.class , ButtonColumn.class};
 
-	public PlantTableModel(List<Plant> plants, Model<Plant> model) {
-		super(plants, model);
-		updateValues(plants);
+	public PlantTableModel(Model<Plant> model) {
+		super(model);
 	}
 	
 

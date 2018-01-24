@@ -1,27 +1,33 @@
 package services;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PlantService extends Service {
 
-	private ArrayList<ArrayList<Object>> list;
-
-	public PlantService() {
-		list = new ArrayList<ArrayList<Object>>();
-		ArrayList<Object> one = new ArrayList<Object>(Arrays.asList(new Object[] { 1, "Hugo", "DECAT" }));
-		ArrayList<Object> two = new ArrayList<Object>(Arrays.asList(new Object[] { 2, "Janaína", "DEARQ" }));
-		ArrayList<Object> three = new ArrayList<Object>(Arrays.asList(new Object[] { 3, "Diego", "DECAT" }));
-		ArrayList<Object> four = new ArrayList<Object>(Arrays.asList(new Object[] { 4, "Marlon", "DEMAT" }));
-		list.add(one);
-		list.add(two);
-		list.add(three);
-		list.add(four);
-	}
-
 	@Override
 	public ArrayList<ArrayList<Object>> selectAll() {
-		return list;
+		ArrayList<ArrayList<Object>> tuples = new ArrayList<ArrayList<Object>>();
+		ArrayList<Object> tuple;
+		try {
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery("SELECT * FROM PLANTAS");
+			while (rs.next()) {
+				tuple = new ArrayList<Object>();
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String depto = rs.getString(3);
+				tuple.add(id);
+				tuple.add(name);
+				tuple.add(depto);
+				tuples.add(tuple);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tuples;
 	}
 
 	@Override
@@ -32,45 +38,61 @@ public class PlantService extends Service {
 
 	@Override
 	public boolean delete(int id) {
-		for (int i = list.size() - 1; i >= 0; i--) {
-			ArrayList<Object> aux = list.get(i);
-			if ((int) aux.get(0) == id) {
-				list.remove(i);
-				return true;
-			}
+		try {
+			Statement s = connection.createStatement();
+			return s.execute("DELETE FROM PLANTAS WHERE ID = " + id);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
 
 	@Override
-	public int update(int id, ArrayList<Object> row) {
-		int match = -1;
-
-		for (ArrayList<Object> line : list) {
-			if ((int) line.get(0) == id) {
-				line.set(1, row.get(1));
-				line.set(2, row.get(2));
-				match = id;
-			}
+	public boolean update(int id, ArrayList<Object> row) {
+		String name = (String) row.get(1);
+		String depto = (String) row.get(2);
+		try {
+			Statement s = connection.createStatement();
+			return s.execute("UPDATE `PLANTAS` SET `NOME` ='" + name + "',`DEPARTAMENTO` = '" + depto
+					+ "' WHERE `PLANTAS`.`ID` = " + id);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		return match;
+		return false;
 	}
 
 	@Override
 	public boolean insert(ArrayList<Object> row) {
-		return list.add(row);
+		String values = "NULL, '" + row.get(1) + "' , '" + row.get(2) + "'";
+		try {
+			Statement s = connection.createStatement();
+			return !s.execute("INSERT INTO `PLANTAS` (`ID`, `NOME`, `DEPARTAMENTO`) VALUES (" + values + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
-	public ArrayList<ArrayList<Object>> selectByName(String name) {
-		ArrayList<ArrayList<Object>> mainList = new ArrayList<ArrayList<Object>>();
-		for (ArrayList<Object> line : list) {
-			if (line.get(1).toString().toLowerCase().contains(name)) {
-				mainList.add(line);
-				return mainList;
+	public ArrayList<ArrayList<Object>> selectByName(String nameToQuery) {
+		ArrayList<ArrayList<Object>> tuples = new ArrayList<ArrayList<Object>>();
+		ArrayList<Object> tuple;
+		try {
+			Statement s = connection.createStatement();
+			ResultSet rs = s.executeQuery("SELECT * FROM PLANTAS WHERE NOME = '" + nameToQuery + "'");
+			while (rs.next()) {
+				tuple = new ArrayList<Object>();
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String depto = rs.getString(3);
+				tuple.add(id);
+				tuple.add(name);
+				tuple.add(depto);
+				tuples.add(tuple);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return null;
+		return tuples;
 	}
 
 }

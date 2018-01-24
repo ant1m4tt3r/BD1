@@ -4,15 +4,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-import db.Connection;
+import db.GetConnection;
 import views.EquipmentPane;
-import views.FoodPane;
 import views.PlantPane;
-import views.UserPane;
 
 public class MainController extends JFrame {
 
@@ -48,12 +47,16 @@ public class MainController extends JFrame {
 		/**************************************
 		 ********* FINAL FRAME CONFIGS ********
 		 *************************************/
-//		addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent winEvt) {
-//				// Connection.getInstance().closeConnection();
-//				System.exit(0);
-//			}
-//		});
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) {
+				try {
+					GetConnection.getInstance().close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				System.exit(0);
+			}
+		});
 		centreWindow(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
@@ -63,8 +66,8 @@ public class MainController extends JFrame {
 	public void addPanes() {
 		mainPane.add("Planta", new PlantPane());
 		mainPane.add("Equipamentos", new EquipmentPane());
-		mainPane.add("Alimentos", new FoodPane());
-		mainPane.add("Usuários", new UserPane());
+		// mainPane.add("Alimentos", new FoodPane());
+		// mainPane.add("Usuários", new UserPane());
 	}
 
 	public static void centreWindow(JFrame frame) {

@@ -31,9 +31,8 @@ public class FoodModel extends Model<Food> {
 	}
 
 	@Override
-	public Food update(Food row) {
-		service.update(row.getId(), null);
-		return null;
+	public boolean update(Food row) {
+		return service.update(row.getId(), null);
 	}
 	
 	@Override

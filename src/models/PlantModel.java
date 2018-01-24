@@ -39,12 +39,12 @@ public class PlantModel extends Model<Plant> {
 	}
 
 	@Override
-	public Plant update(Plant row) {
+	public boolean update(Plant row) {
 		ArrayList<Object> list = new ArrayList<Object>();
 		list.add((int) row.getId());
 		list.add((String) row.getName());
 		list.add((String) row.getDepto());
-		return select((int) service.update(row.getId(), list));
+		return service.update(row.getId(), list);
 	}
 
 	@Override
@@ -56,11 +56,11 @@ public class PlantModel extends Model<Plant> {
 		return service.insert(list);
 	}
 	
-	public ArrayList<Plant> selectByName(String name) {
-		if (name == null || name.isEmpty())
+	public ArrayList<Plant> selectByName(String text) {
+		if (text == null || text.isEmpty())
 			return selectAll();
 		
-		ArrayList<ArrayList<Object>> list = service.selectByName(name.toLowerCase());
+		ArrayList<ArrayList<Object>> list = service.selectByName(text.toLowerCase());
 		if (list == null || list.isEmpty())
 			return new ArrayList<Plant>();
 		
