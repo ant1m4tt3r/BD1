@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 
 import db.GetConnection;
 import views.EquipmentPane;
+import views.FoodPane;
 import views.PlantPane;
 
 public class MainController extends JFrame {
@@ -66,7 +67,7 @@ public class MainController extends JFrame {
 	public void addPanes() {
 		mainPane.add("Planta", new PlantPane());
 		mainPane.add("Equipamentos", new EquipmentPane());
-		// mainPane.add("Alimentos", new FoodPane());
+		mainPane.add("Alimentos", new FoodPane());
 		// mainPane.add("Usuários", new UserPane());
 	}
 

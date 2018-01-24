@@ -2,12 +2,14 @@ package models.table;
 
 import java.util.List;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
+//import javax.swing.event.TableModelEvent;
+//import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import models.Model;
 import models.beans.Bean;
+//import models.beans.Plant;
+import models.beans.Equipment;
 import models.beans.Plant;
 
 public abstract class CustomTableModel<T extends Bean> extends DefaultTableModel {
@@ -34,6 +36,6 @@ public abstract class CustomTableModel<T extends Bean> extends DefaultTableModel
 	@Override
 	public abstract Class<?> getColumnClass(int columnIndex);
 	
-	public abstract void updateValues(List<T> beans);
+	public abstract void updateValues(List<T> t);
 	
 }

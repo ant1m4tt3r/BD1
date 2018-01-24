@@ -1,11 +1,11 @@
 package models;
 
 import java.util.List;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 import models.beans.Bean;
-import models.beans.User;
-import services.Service;
+//import models.beans.User;
+//import services.Service;
 
 public abstract class Model<T extends Bean> {
 	

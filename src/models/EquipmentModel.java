@@ -1,10 +1,10 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 import models.beans.Equipment;
-import models.beans.Plant;
+//import models.beans.Plant;
 import services.EquipmentService;
 
 public class EquipmentModel extends Model<Equipment> {

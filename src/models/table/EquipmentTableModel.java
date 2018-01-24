@@ -1,6 +1,7 @@
 package models.table;
 
 import java.util.List;
+import models.table.CustomTableModel;
 
 import models.Model;
 import models.beans.Equipment;
@@ -45,5 +46,7 @@ public class EquipmentTableModel extends CustomTableModel<Equipment> {
 			this.addRow(data);
 		}
 	}
+
+	
 
 }

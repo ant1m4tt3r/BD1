@@ -48,6 +48,7 @@ public abstract class CustomPane<T extends Bean> extends JPanel {
 
 	abstract void showInsertNewPlantModal();
 
+	
 	void createComponents(String relation) {
 		this.label = new JLabel("Pesquisa por nome:");
 		this.searchField = new JTextField();
@@ -137,9 +138,9 @@ public abstract class CustomPane<T extends Bean> extends JPanel {
 	}
 
 	void search(String text) {
-		List<T> plants = this.model.selectByName(text);
+		List<T> t = this.model.selectByName(text);
 		this.tableModel.setRowCount(0);
-		this.tableModel.updateValues(plants);
+		this.tableModel.updateValues(t);
 		this.table.setModel(this.tableModel);
 		this.tableModel.fireTableDataChanged();
 	}

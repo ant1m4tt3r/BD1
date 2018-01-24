@@ -9,11 +9,10 @@ public class PlantTableModel extends CustomTableModel<Plant> {
 
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unused")
 	private final String[] columnNames = new String[] { "Id", "Nome",
 			"Departamento", "Action" };
 
-	@SuppressWarnings({ "unused", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	private final Class[] columnClass = new Class[] { Integer.class, String.class,
 			String.class , ButtonColumn.class};
 
@@ -48,5 +47,8 @@ public class PlantTableModel extends CustomTableModel<Plant> {
 			this.addRow(data);
 		}
 	}
+
+
+
 
 }
