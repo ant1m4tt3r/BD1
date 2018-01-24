@@ -13,7 +13,7 @@ public class PlantService extends Service {
 		ArrayList<Object> tuple;
 		try {
 			Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM PLANTAS");
+			ResultSet rs = s.executeQuery("SELECT * FROM planta");
 			while (rs.next()) {
 				tuple = new ArrayList<Object>();
 				int id = rs.getInt(1);
@@ -40,7 +40,7 @@ public class PlantService extends Service {
 	public boolean delete(int id) {
 		try {
 			Statement s = connection.createStatement();
-			return s.execute("DELETE FROM PLANTAS WHERE ID = " + id);
+			return s.execute("DELETE FROM planta WHERE codigo = " + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -53,8 +53,8 @@ public class PlantService extends Service {
 		String depto = (String) row.get(2);
 		try {
 			Statement s = connection.createStatement();
-			return s.execute("UPDATE `PLANTAS` SET `NOME` ='" + name + "',`DEPARTAMENTO` = '" + depto
-					+ "' WHERE `PLANTAS`.`ID` = " + id);
+			return s.execute("UPDATE `planta` SET `NOME` ='" + name + "',`DEPARTAMENTO` = '" + depto
+					+ "' WHERE `planta`.`codigo` = " + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,7 +66,7 @@ public class PlantService extends Service {
 		String values = "NULL, '" + row.get(1) + "' , '" + row.get(2) + "'";
 		try {
 			Statement s = connection.createStatement();
-			return !s.execute("INSERT INTO `PLANTAS` (`ID`, `NOME`, `DEPARTAMENTO`) VALUES (" + values + ")");
+			return !s.execute("INSERT INTO `planta` (`codigo`, `NOME`, `DEPARTAMENTO`) VALUES (" + values + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -78,7 +78,7 @@ public class PlantService extends Service {
 		ArrayList<Object> tuple;
 		try {
 			Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM PLANTAS WHERE NOME = '" + nameToQuery + "'");
+			ResultSet rs = s.executeQuery("SELECT * FROM planta WHERE NOME = '" + nameToQuery + "'");
 			while (rs.next()) {
 				tuple = new ArrayList<Object>();
 				int id = rs.getInt(1);

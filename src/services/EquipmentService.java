@@ -14,7 +14,7 @@ public class EquipmentService extends Service {
 		ArrayList<Object> tuple;
 		try {
 			Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM EQUIPAMENTOS");
+			ResultSet rs = s.executeQuery("SELECT * FROM equipamento");
 			while (rs.next()) {
 				tuple = new ArrayList<Object>();
 				int id = rs.getInt(1);
@@ -41,7 +41,7 @@ public class EquipmentService extends Service {
 	public boolean delete(int id) {
 		try {
 			Statement s = connection.createStatement();
-			return s.execute("DELETE FROM EQUIPAMENTOS WHERE ID = " + id);
+			return s.execute("DELETE FROM equipamento WHERE numserie = " + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -54,8 +54,8 @@ public class EquipmentService extends Service {
 		String manufacturer = (String) row.get(2);
 		try {
 			Statement s = connection.createStatement();
-			return s.execute("UPDATE `EQUIPAMENTOS` SET `NOME` ='" + name + "',`FABRICANTE` = '" + manufacturer
-					+ "' WHERE `EQUIPAMENTOS`.`ID` = " + id);
+			return s.execute("UPDATE `equipamento` SET `NOME` ='" + name + "',`FABRICANTE` = '" + manufacturer
+					+ "' WHERE `equipamento`.`numserie` = " + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -67,7 +67,7 @@ public class EquipmentService extends Service {
 		String values = "NULL, '" + row.get(1) + "' , '" + row.get(2) + "'";
 		try {
 			Statement s = connection.createStatement();
-			return !s.execute("INSERT INTO `EQUIPAMENTOS` (`ID`, `NOME`, `FABRICANTE`) VALUES (" + values + ")");
+			return !s.execute("INSERT INTO `equipamento` (`numserie`, `NOME`, `FABRICANTE`) VALUES (" + values + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class EquipmentService extends Service {
 		ArrayList<Object> tuple;
 		try {
 			Statement s = connection.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM EQUIPAMENTOS WHERE NOME = '" + nameToQuery + "'");
+			ResultSet rs = s.executeQuery("SELECT * FROM equipamento WHERE NOME = '" + nameToQuery + "'");
 			while (rs.next()) {
 				tuple = new ArrayList<Object>();
 				int id = rs.getInt(1);

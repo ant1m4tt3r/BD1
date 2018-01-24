@@ -33,7 +33,7 @@ public class GetConnection {
 	private void createConnection() throws ClassNotFoundException, SQLException {
 		Class.forName(driverName);
 		String serverName = "localhost"; // caminho do servidor do BD
-		String mydatabase = "db"; // nome do seu banco de dados
+		String mydatabase = "sistema_secagem"; // nome do seu banco de dados
 		String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
 		conn = DriverManager.getConnection(url, USERNAME, PASSWORD);
 		if (conn != null) {

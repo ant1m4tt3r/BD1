@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Library"/>
-	<classpathentry kind="lib" path="C:/Users/HugoS/Downloads/JTattoo-1.6.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/Java/jdk1.8.0_162/jre/lib/ext/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/d13go/Desktop/JTattoo-1.6.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
